@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { UniqueCharCount } from './UniqueCharCount';
+
 const Table = styled.table`
   margin: 0 auto;
   border-spacing: 0;
@@ -14,21 +16,32 @@ const TableHead = styled.thead`
 `;
 
 const TableHeader = styled.th`
-  padding: 5px 0;
+  padding: 5px 10px;
+  &:first-child {
+    border-top-left-radius: 7px;
+  }
+  &:last-child {
+    border-top-right-radius: 7px;
+  }
 `;
 
-const Headers = () => (
+const Headers = ({displayCharCount = false}) => (
   <TableHead>
     <tr>
-      <TableHeader style={{borderTopLeftRadius: "7px"}}>
+      <TableHeader>
         Name
       </TableHeader>
       <TableHeader>
         Email
       </TableHeader>
-      <TableHeader style={{borderTopRightRadius: "7px"}}>
+      <TableHeader>
         Title
       </TableHeader>
+      { displayCharCount &&
+        <TableHeader>
+          Character count in mail
+        </TableHeader>
+      }
     </tr>
   </TableHead>
 )
@@ -43,21 +56,32 @@ const TableCell = styled.td`
   padding: 4px 10px;
 `;
 
-const Rows = ({peopleList}) => (
+const Rows = ({peopleList = [], displayCharCount = false}) => (
   <tbody>
     {peopleList.map((person, i) => 
       <TableRow key={`person-${i}`}>
         <TableCell className="personCell">{person.display_name}</TableCell>
         <TableCell className="personCell">{person.email_address}</TableCell>
         <TableCell className="personCell">{person.title}</TableCell>
+        {displayCharCount &&
+          <TableCell className="personCell">
+            <UniqueCharCount mail={person.email_address}/>
+          </TableCell>
+        }
       </TableRow>
     )}
   </tbody>
-) 
-
-export const PeopleTable = ({peopleList}) => (
-  <Table>
-    <Headers/>
-    <Rows peopleList={peopleList}/>
-  </Table>
 )
+
+export const PeopleTable = ({peopleList = [], displayCharCount = false}) => {
+  const rowProps = {
+    peopleList,
+    displayCharCount
+  };
+  return (
+    <Table>
+      <Headers displayCharCount={displayCharCount}/>
+      <Rows {...rowProps}/>
+    </Table>
+  );
+}
