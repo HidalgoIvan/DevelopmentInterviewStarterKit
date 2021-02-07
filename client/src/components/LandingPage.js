@@ -1,8 +1,8 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
 
-import { ConnectedNavBar } from '../containers/ConnectedNavBar'
-import { Intro } from './Intro'
+import { ConnectedNavBar } from '../containers/ConnectedNavBar';
+import { ConnectedPeopleList } from './People/People';
 
 const Page = styled.div`
   display: grid;
@@ -11,17 +11,10 @@ const Page = styled.div`
   width: 100%;
 `;
 
-const FlexBox = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 export const LandingPage = () => (
   <Page>
     <ConnectedNavBar />
-    <FlexBox>
-      <Intro />
-    </FlexBox>
+    <ConnectedPeopleList />
   </Page>
 );
