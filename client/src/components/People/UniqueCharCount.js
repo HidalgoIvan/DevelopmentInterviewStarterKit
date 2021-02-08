@@ -9,15 +9,21 @@ const fadeInAnimation = keyframes`
   100% { opacity: 1 }
 `;
 
+const CharSpanContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`
+
 const CharSpan = styled.span`
   background-color: #007cba;
   color: #fff;
   border-radius: 5px;
-  margin: 0 3px;
+  margin: 3px;
   padding: 1px 3px;
   opacity: 0;
   animation-name: ${fadeInAnimation};
   animation-fill-mode: forwards;
+  white-space: pre;
 `;
 
 export const UniqueCharCount = ({mail = ""}) => {
@@ -27,15 +33,15 @@ export const UniqueCharCount = ({mail = ""}) => {
     .sort((a,b) => {return charCount[b]-charCount[a]});
   
   return (
-    <span>
+    <CharSpanContainer>
       {
         orderedCharCountKeys.map((key, i) => (
-          <CharSpan style={{animationDuration: `${0.07 * i}s`}}>
+          <CharSpan key={i} style={{animationDuration: `${0.07 * i}s`}}>
             {key}: {charCount[key]}
           </CharSpan>
         ))
       }
-    </span>
+    </CharSpanContainer>
   )
 };
 
