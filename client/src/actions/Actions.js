@@ -13,3 +13,10 @@ export function receivePeople(people) {
     people
   }
 }
+
+export function receivePeopleDuplicates(duplicates) {
+  return {
+    type: actions.RECEIVE_PEOPLE_DUPLICATES,
+    duplicates
+  }
+}

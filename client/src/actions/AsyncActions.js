@@ -17,3 +17,13 @@ export function fetchPeople() {
       then(people => dispatch(actions.receivePeople(people)));
   }
 }
+
+export function fetchPersonDuplicates(personId) {
+  return dispatch => {
+    return fetch(`/api/personDuplicates/${personId}`, creds).
+      then(response => response.json()).
+      then(duplicates => 
+        dispatch(actions.receivePeopleDuplicates(duplicates))
+      );
+  }
+}

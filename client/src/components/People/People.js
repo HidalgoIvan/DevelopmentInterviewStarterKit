@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 
+import { fetchPersonDuplicates } from '../../actions/AsyncActions';
+
 import { PeopleTable } from './PeopleTable'
 
 const TableControls = styled.div`
@@ -25,11 +27,13 @@ const CharCountButton = styled.button`
   }
 `
 
-const People = ({peopleList}) => {
+const People = (props = {peopleList: []}) => {
+  const peopleList = props.peopleList;
   const [displayCharCount, setDisplayCharCount] = useState(false);
   const peopleTableProps = {
     peopleList,
-    displayCharCount
+    displayCharCount,
+    fetchPersonDuplicates: props.fetchPersonDuplicates
   }
   return (
     <div>
@@ -51,6 +55,6 @@ const People = ({peopleList}) => {
 
 const mapStateToProps = state => ({ peopleList: state.people.data });
 
-export const ConnectedPeopleList = connect(mapStateToProps)(People);
+export const ConnectedPeopleList = connect(mapStateToProps, { fetchPersonDuplicates })(People);
 
 export default ConnectedPeopleList;

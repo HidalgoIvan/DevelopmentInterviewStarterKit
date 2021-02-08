@@ -42,6 +42,9 @@ const Headers = ({displayCharCount = false}) => (
           Character count in mail
         </TableHeader>
       }
+      <TableHeader>
+        Actions
+      </TableHeader>
     </tr>
   </TableHead>
 )
@@ -56,7 +59,15 @@ const TableCell = styled.td`
   padding: 4px 10px;
 `;
 
-const Rows = ({peopleList = [], displayCharCount = false}) => (
+const DuplicateSearchButton = styled.button`
+  background-color: #d47300;
+  color: #fff;
+  border-radius: 15px;
+  border: none;
+  padding: 5px 15px;
+`;
+
+const Rows = ({peopleList = [], displayCharCount = false, fetchPersonDuplicates = () => {}}) => (
   <tbody>
     {peopleList.map((person, i) => 
       <TableRow key={`person-${i}`}>
@@ -68,15 +79,21 @@ const Rows = ({peopleList = [], displayCharCount = false}) => (
             <UniqueCharCount mail={person.email_address}/>
           </TableCell>
         }
+        <TableCell className="personCell">
+          <DuplicateSearchButton onClick={() => {fetchPersonDuplicates(person.id)}}>
+            Find duplicates
+          </DuplicateSearchButton>
+        </TableCell>
       </TableRow>
     )}
   </tbody>
 )
 
-export const PeopleTable = ({peopleList = [], displayCharCount = false}) => {
+export const PeopleTable = ({peopleList = [], displayCharCount = false, fetchPersonDuplicates = () => {}}) => {
   const rowProps = {
     peopleList,
-    displayCharCount
+    displayCharCount,
+    fetchPersonDuplicates
   };
   return (
     <Table>
