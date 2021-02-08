@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import { ConnectedNavBar } from '../containers/ConnectedNavBar';
-import { ConnectedPeopleList } from './People/People';
+import { ConnectedPeople } from './People/People';
 
 const Page = styled.div`
   display: grid;
@@ -14,7 +13,6 @@ const Page = styled.div`
 
 export const LandingPage = () => (
   <Page>
-    <ConnectedNavBar />
-    <ConnectedPeopleList />
+    <ConnectedPeople />
   </Page>
 );

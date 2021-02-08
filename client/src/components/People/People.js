@@ -4,7 +4,15 @@ import { connect } from 'react-redux';
 
 import { fetchPersonDuplicates } from '../../actions/AsyncActions';
 
-import { PeopleTable } from './PeopleTable'
+import { PeopleTable } from './PeopleTable';
+import { DuplicatePeople } from './DuplicatePeople';
+
+// Things I would like to add in the future:
+
+//   - Pagination for people search
+//   - More actions for the people table (Delete, expand info, etc.)
+//   - Icons
+//   - Prettier CSS
 
 const TableControls = styled.div`
   display: flex;
@@ -27,8 +35,9 @@ const CharCountButton = styled.button`
   }
 `
 
-const People = (props = {peopleList: []}) => {
-  const peopleList = props.peopleList;
+const People = (props = {peopleList: [], duplicates: []}) => {
+  const peopleList = props.peopleList && props.peopleList.data;
+  const duplicateList = props.duplicates;
   const [displayCharCount, setDisplayCharCount] = useState(false);
   const peopleTableProps = {
     peopleList,
@@ -48,13 +57,16 @@ const People = (props = {peopleList: []}) => {
           }
         </CharCountButton>
       </TableControls>
+      { duplicateList &&
+        <DuplicatePeople duplicateList={duplicateList}/>
+      }
     </div>
   )
 }
 
 
-const mapStateToProps = state => ({ peopleList: state.people.data });
+const mapStateToProps = state => ({ peopleList: state.people.peopleList, duplicates: state.people.duplicates });
 
-export const ConnectedPeopleList = connect(mapStateToProps, { fetchPersonDuplicates })(People);
+export const ConnectedPeople = connect(mapStateToProps, { fetchPersonDuplicates })(People);
 
-export default ConnectedPeopleList;
+export default ConnectedPeople;

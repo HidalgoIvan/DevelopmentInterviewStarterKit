@@ -7,9 +7,9 @@ export function people(
 ) {
   switch(action.type) {
     case RECEIVE_PEOPLE:
-      return merge(state, action.people);
+      return merge(state, {peopleList: action.people});
     case RECEIVE_PEOPLE_DUPLICATES:
-      return merge(state, action.duplicates);
+      return merge(state, {duplicates: action.duplicates});
     default:
       return state;
   }
